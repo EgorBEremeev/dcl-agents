@@ -1,0 +1,65 @@
+@prefix dclc: <http://dcl.org/dcl-core#> .
+@prefix ctx: <http://dcl.org/agent-context#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://dcl.org/dcl-core> rdf:type owl:Ontology ;
+    owl:imports <http://dcl.org/agent-context> ;
+    rdfs:comment "Базовая онтология Domain Context Language. Определяет формализм для операционализации Context Engineering, описывая правила сборки Invocation Context."@ru .
+
+#################################################################
+#    Meta-Classes (Components of the Language)
+#################################################################
+
+dclc:DomainContextLanguage rdf:type owl:Class ;
+    rdfs:label "Domain Context Language (Meta)" ;
+    rdfs:comment "Саморасширяемое семейство языков. Его физические артефакты (грамматика, сущности) служат инструментами для спецификации и сборки абстрактных структур внимания (Context Frames)."@ru .
+
+dclc:LanguageEntity rdf:type owl:Class ;
+    rdfs:label "Language Entity (Operand)" ;
+    rdfs:comment "Объект предметной области (Существительное), над которым производятся операции. Служит исходным материалом для порождения контекста."@ru .
+
+dclc:LanguageOperation rdf:type owl:Class ;
+    rdfs:label "Language Operation (Verb)" ;
+    rdfs:comment "Domain Primitive. Операция предметной области, определяющая вектор действия (Интенцию) в инструкции."@ru .
+
+dclc:LanguageModifier rdf:type owl:Class ;
+    rdfs:label "Language Modifier (Lens/Constraint)" ;
+    rdfs:comment "Инструмент, накладывающий ограничения (Hard Constraints) или эвристические веса (Soft Constraints) на процесс сборки контекста. Включает источники данных, линзы/роли и цели."@ru .
+
+dclc:Instruction rdf:type owl:Class ;
+    rdfs:label "Abstract Instruction" ;
+    rdfs:comment "Единица коммуникации. Спецификация для динамической сборки Invocation Context в ран-тайме."@ru .
+
+dclc:LanguageGrammar rdf:type owl:Class ;
+    rdfs:label "Abstract Grammar" ;
+    rdfs:comment "Набор синтаксических правил (BNF), определяющих валидную структуру инструкции."@ru .
+
+#################################################################
+#    Properties: Language Structure
+#################################################################
+
+dclc:coversDomainEntity rdf:type owl:ObjectProperty ;
+    rdfs:domain dclc:DomainContextLanguage ;
+    rdfs:range dclc:LanguageEntity ;
+    rdfs:comment "Определяет область действия языка: какие типы сущностей он способен обрабатывать и специфицировать."@ru .
+
+dclc:governedByGrammar rdf:type owl:ObjectProperty ;
+    rdfs:domain dclc:Instruction ;
+    rdfs:range dclc:LanguageGrammar ;
+    rdfs:comment "Указывает, что инструкция должна быть валидной цепочкой символов, выводимой из правил данной грамматики."@ru .
+
+#################################################################
+#    Properties: Bridge to Runtime Context
+#################################################################
+
+dclc:instantiates rdf:type owl:ObjectProperty ;
+    rdfs:domain dclc:LanguageEntity ;
+    rdfs:range ctx:ContextFrame ;
+    rdfs:comment "Отношение 'Шаблон -> Экземпляр'. Один модуль (Source) порождает множество идентичных по семантике, но различных по вхождению Фреймов (Context Frames) в разных вызовах."@ru .
+
+dclc:compilesInto rdf:type owl:ObjectProperty ;
+    rdfs:domain dclc:Instruction ;
+    rdfs:range ctx:InvocationContext ;
+    rdfs:comment "Инструкция транслируется (компилируется) в ран-тайме в Invocation Context — полную совокупность информации для одного вызова к LLM API."@ru .

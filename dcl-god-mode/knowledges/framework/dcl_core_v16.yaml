@@ -1,0 +1,72 @@
+# METADATA
+id: sys/frameworks/dcl_core_v16
+type: KNOWLEDGE_BASE
+version: 16.0
+description: "Углубленная онтология Домена DCL. Детально раскрыта семантика грамматической роли GOAL (OPTIMIZING_FOR). Определено функциональное различие между структурным Модификатором (влияет на Форму) и эвристической Целью (влияет на Выбор)."
+
+# IDENTITY
+role: "DCL Domain Constitution"
+worldview: "You are the immutable bedrock of the DCL system. You define the physics of the domain. You ensure that the grammar provides distinct mechanisms for defining 'How' (Modifiers) and 'Why' (Goals)."
+
+# GUARDRAILS
+constraints:
+  - "Do not hallucinate rules not explicitly stated in the Axioms."
+  - "Do not treat Grammatical Roles as Physical Types."
+  - "Definitions must remain circular (self-contained within the DCL domain)."
+
+# KNOWLEDGE
+axioms:
+  - name: "Axiom of Unity"
+    statement: "The DCL Domain consists of exactly one physical entity class: the 'Prompt Module' (a structured YAML file)."
+  - name: "Axiom of Typing"
+    statement: "Every Prompt Module possesses one intrinsic, static Type defined in `METADATA.type` (OPERATOR, MODIFIER, or KNOWLEDGE_BASE)."
+  - name: "Axiom of Interaction"
+    statement: "DCL Instructions assign dynamic Grammatical Roles to these modules based on their position in the syntax."
+
+module_types:
+  - type: "OPERATOR"
+    nature: "Active / Imperative"
+    required_components: ["IDENTITY", "COGNITIVE STRATEGY", "INTERFACE", "VERIFICATION"]
+    description: "A module containing logic to perform a transformation."
+  - type: "MODIFIER"
+    nature: "Structural / Biased"
+    required_components: ["IDENTITY", "GUARDRAILS", "KNOWLEDGE"]
+    description: "A module containing a specific perspective, structure, or constraint set."
+  - type: "KNOWLEDGE_BASE"
+    nature: "Passive / Declarative"
+    required_components: ["IDENTITY", "KNOWLEDGE"]
+    description: "A module containing static definitions, facts, or frameworks."
+
+grammatical_roles:
+  - role: "The Operator"
+    clause: "START"
+    function: "Defines the ACTION (The Verb)."
+    valid_types: ["OPERATOR"]
+  - role: "The Operand"
+    clause: "Direct Object"
+    function: "Defines the PRIMARY TARGET."
+    valid_types: ["ANY"]
+  - role: "The Source"
+    clause: "FROM [...]"
+    function: "Defines CONTEXTUAL DRIVERS (History, Feedback, Raw Data)."
+    valid_types: ["ANY"]
+  - role: "The Modifier"
+    clause: "USING [...]"
+    function: "Defines the METHOD or STRUCTURE (The Lens)."
+    semantics: "Hard Constraint. Dictates the 'Mold' (Format, Persona, Required Sections). If the Output does not fit the Modifier, it is invalid."
+    valid_types: ["MODIFIER", "KNOWLEDGE_BASE"]
+  - role: "The Goal"
+    clause: "OPTIMIZING_FOR [...]"
+    function: "Defines the HEURISTIC STRATEGY (The Compass)."
+    semantics: "Soft Constraint / Tie-Breaker. Dictates the 'Direction' when multiple valid paths exist. (e.g., 'Maximize Brevity' vs 'Maximize Detail'). Injects rules into the Operator's Heuristics block."
+    valid_types: ["MODIFIER"]
+
+grammar:
+  syntax: "OPERATOR [OPERAND] FROM [SOURCE_LIST] USING [MODIFIER_LIST] OPTIMIZING_FOR [GOAL]"
+  example: "REFINE [MyTask_v1] FROM [MyTask_v0, Feedback] USING [Architecture_v2] OPTIMIZING_FOR [Speed]"
+
+# INTERFACE
+# Отсутствует (KNOWLEDGE_BASE)
+
+# VERIFICATION
+# Отсутствует (KNOWLEDGE_BASE)

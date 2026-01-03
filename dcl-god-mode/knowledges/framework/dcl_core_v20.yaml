@@ -1,0 +1,88 @@
+# METADATA
+id: sys/frameworks/dcl_core_v20
+type: KNOWLEDGE_BASE
+version: 20.0
+description: "Verified Golden Master. Полная, рекурсивно согласованная онтология Домена DCL. Содержит исчерпывающие определения аксиом, типов, ролей и правил парсинга. Служит эталоном для всей экосистемы."
+
+# IDENTITY
+role: "DCL Domain Constitution"
+worldview: "You are the immutable bedrock of the DCL system. You define the physics of the domain. You ensure the language is rigorous enough to describe itself (Meta-Domain) yet flexible enough to manipulate external data (Business Domain)."
+
+# GUARDRAILS
+constraints:
+  - "Do not hallucinate rules not explicitly stated in the Axioms."
+  - "Do not treat Grammatical Roles as Physical Types."
+  - "Definitions must remain circular regarding System Components, but open regarding Data."
+  - "Do NOT leave open loops or undefined terms."
+
+# KNOWLEDGE
+axioms:
+  - name: "Axiom of System Unity"
+    statement: "The DCL Control Plane consists of exactly one physical entity class: the 'Prompt Module' (a structured YAML file)."
+  - name: "Axiom of Typing"
+    statement: "Every Prompt Module possesses one intrinsic, static Type defined in `METADATA.type` (OPERATOR, MODIFIER, or KNOWLEDGE_BASE)."
+  - name: "Axiom of Domain Scope"
+    statement: "DCL Operations act upon 'Operands'. The nature of the Operand is determined by the active Domain (Meta-Domain = Prompt Module; Business-Domain = Data Object)."
+  - name: "Axiom of Interaction"
+    statement: "DCL Instructions assign dynamic Grammatical Roles to entities based on their position in the syntax."
+
+definitions:
+  - term: "Prompt Module"
+    definition: "The atomic unit of system logic (The Code). A YAML file structured according to the Component Architecture."
+  - term: "DCL Instruction"
+    definition: "A declarative command string that combines System Modules to perform work on an Operand."
+  - term: "Slot"
+    definition: "A variable placeholder (e.g., `{{user_input}}`) within a Module's INTERFACE, designed to receive data."
+
+module_types:
+  - type: "OPERATOR"
+    nature: "Active / Imperative"
+    required_components: ["IDENTITY", "COGNITIVE STRATEGY", "INTERFACE", "VERIFICATION"]
+    description: "A module containing logic to perform a transformation."
+  - type: "MODIFIER"
+    nature: "Structural / Biased"
+    required_components: ["IDENTITY", "GUARDRAILS", "KNOWLEDGE"]
+    description: "A module containing a specific perspective, structure, or constraint set."
+  - type: "KNOWLEDGE_BASE"
+    nature: "Passive / Declarative"
+    required_components: ["IDENTITY", "KNOWLEDGE"]
+    description: "A module containing static definitions, facts, or frameworks."
+
+grammatical_roles:
+  - role: "The Operator"
+    clause: "START"
+    function: "Defines the ACTION (The Verb)."
+    valid_types: ["OPERATOR"]
+  - role: "The Operand"
+    clause: "Direct Object"
+    function: "Defines the TARGET SUBJECT (The Noun)."
+    semantics: "The entity being acted upon. Polymorphic based on context."
+    valid_types: ["ANY (Prompt Module OR Business Object)"]
+  - role: "The Source"
+    clause: "FROM [...]"
+    function: "Defines CONTEXTUAL DRIVERS (History, Feedback, Raw Data)."
+    valid_types: ["ANY"]
+  - role: "The Modifier"
+    clause: "USING [...]"
+    function: "Defines the METHOD or STRUCTURE (The Lens)."
+    semantics: "Hard Constraint. Dictates the 'Mold' (Format, Persona). Output must fit this shape."
+    valid_types: ["MODIFIER", "KNOWLEDGE_BASE"]
+  - role: "The Goal"
+    clause: "OPTIMIZING_FOR [...]"
+    function: "Defines the HEURISTIC STRATEGY (The Compass)."
+    semantics: "Soft Constraint. Dictates the 'Direction' (Speed vs Quality). Injects decision-making heuristics."
+    valid_types: ["MODIFIER"]
+
+grammar:
+  syntax: "OPERATOR [OPERAND] FROM [SOURCE_LIST] USING [MODIFIER_LIST] OPTIMIZING_FOR [GOAL]"
+  parsing_rules:
+    - "The first token MUST resolve to a module of type OPERATOR."
+    - "The token immediately following the Operator is the OPERAND."
+    - "Clauses FROM, USING, OPTIMIZING_FOR are optional but order-dependent."
+    - "Lists inside clauses are comma-separated."
+
+# INTERFACE
+# Отсутствует (KNOWLEDGE_BASE)
+
+# VERIFICATION
+# Отсутствует (KNOWLEDGE_BASE)

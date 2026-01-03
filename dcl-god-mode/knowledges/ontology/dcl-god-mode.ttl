@@ -1,0 +1,92 @@
+@prefix dclgm: <http://dcl.org/dcl-god-mode#> .
+@prefix dclc: <http://dcl.org/dcl-core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://dcl.org/dcl-god-mode> rdf:type owl:Ontology ;
+    owl:imports <http://dcl.org/dcl-core> ;
+    rdfs:comment "Ядро DCL (Core Implementation)."@ru .
+
+#################################################################
+#    The Core Language Instance
+#################################################################
+
+dclgm:DCL_Meta rdf:type dclc:DomainContextLanguage ;
+    rdfs:label "DCL Meta v1.0" ;
+    dclc:coversDomainEntity :PromptModule ;
+    rdfs:comment "Конкретная реализация DCL. Реализация языка, в котором единственной сущностью является Prompt Module, и, таким образом, реализуется тьюринг-полная система для задач Context Engineering. В настояшем языке Контекст — это та сущность, вокруг которой построен этот домен."@ru .
+
+#################################################################
+#    Entities & Instruction
+#################################################################
+
+dclgm:PromptModule rdf:type owl:Class ;
+    rdfs:subClassOf dclc:LanguageEntity ;
+    rdfs:label "DCL Prompt Module" ;
+    rdfs:comment "Физический артефакт (YAML-файл). Дизайн-тайм артефакт, структура которого гарантирует целостность (Metadata, Identity, Knowledge, Interface). В DCL Core это единственная сущность, выступающая и как операнд, и как носитель логики оператора."@ru .
+
+dclgm:DCL_Instruction rdf:type owl:Class ;
+    rdfs:subClassOf dclc:Instruction ;
+    rdfs:label "DCL Standard Instruction" ;
+    dclc:governedByGrammar dclgm:Grammar_BNF_Def ;
+    rdfs:comment "Полная команда DCL: OPERATION [OPERAND] FROM [SOURCE] USING [METHOD/LENS] OPTIMIZING_FOR [GOAL]. Формализует формирование контекста на стыке дизайн- и ран-тайма."@ru .
+
+#################################################################
+#    Self-Hosting Mechanics
+#################################################################
+
+dclgm:implementedByModule rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ; owl:unionOf (dclc:DomainContextLanguage dclc:LanguageEntity dclc:LanguageOperation dclc:LanguageModifier dclc:LanguageGrammar) ] ;
+    rdfs:range dclgm:PromptModule ;
+    rdfs:comment "Связывает абстрактный элемент языка (Глагол, Ограничение, Грамматику) с конкретным Промпт-Модулем, который содержит семантику и правила для LLM."@ru .
+
+#################################################################
+#    Minimal Turing-Complete Set (Bootstrap Instances)
+#################################################################
+
+# --- 1. Operations (Verbs) ---
+
+dclgm:Op_Write rdf:type dclc:LanguageOperation ;
+    rdfs:label "WRITE (Synthesis)" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Write ;
+    rdfs:comment "Операция создания. Порождает новый экземпляр Prompt_Module, реализующий требуемую семантику. Signature: Intent -> Prompt_Module."@ru .
+
+dclgm:Op_Refine rdf:type dclc:LanguageOperation ;
+    rdfs:label "REFINE (Evolution)" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Refine ;
+    rdfs:comment "Операция мутации. Изменяет содержание Prompt_Module для повышения его соответствия требованиям (снижение функции потерь). Signature: (Prompt_Module, Feedback) -> Prompt_Module'."@ru .
+
+dclgm:Op_Decompose rdf:type dclc:LanguageOperation ;
+    rdfs:label "DECOMPOSE (Analysis)" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Decompose ;
+    rdfs:comment "Операция факторизации. Разделяет один Prompt_Module на множество ортогональных модулей, сохраняя суммарную семантику. Signature: Prompt_Module -> Set<Prompt_Module>."@ru .
+
+# --- 2. Modifiers (Constraints) ---
+
+dclgm:Modif_Grammar rdf:type dclc:LanguageModifier ;
+    rdfs:label "Grammar Constraint" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Grammar ;
+    rdfs:comment "Обязательное условие: соответствие синтаксису DCL."@ru .
+
+dclgm:Modif_Schema rdf:type dclc:LanguageModifier ;
+    rdfs:label "Schema Constraint" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Schema ;
+    rdfs:comment "Обязательное условие: соответствие структуре YAML-артефакта (Schema Spec)."@ru .
+
+# --- 3. Physical Modules (Artifacts) ---
+
+dclgm:Mod_Sys_Write rdf:type dclgm:PromptModule ; rdfs:label "dcl-god-mode/operations/write" .
+dclgm:Mod_Sys_Refine rdf:type dclgm:PromptModule ; rdfs:label "dcl-god-mode/operations/refine" .
+dclgm:Mod_Sys_Decompose rdf:type dclgm:PromptModule ; rdfs:label "dcl-god-mode/operations/decompose" .
+dclgm:Mod_Sys_Grammar rdf:type dclgm:PromptModule ; rdfs:label "dcl-core/knowledges/framework/dcl_grammar" .
+dclgm:Mod_Sys_Schema rdf:type dclgm:PromptModule ; rdfs:label "dcl-core/modifiers/dcl_specification" .
+
+#################################################################
+#    Grammar Definition
+#################################################################
+
+dclgm:Grammar_BNF_Def rdf:type dclc:LanguageGrammar ;
+    rdfs:label "DCL BNF Grammar" ;
+    dclgm:implementedByModule dclgm:Mod_Sys_Grammar ;
+    rdfs:comment "Описание синтаксических правил построения инструкций."@ru .

@@ -1,0 +1,14 @@
+aliases:
+  entities:
+    PromptModule: dcl-god-mode/entities/prompt_module/1.1 
+  operations:
+    WRITE: dcl-god-mode/operations/write/4.0  
+    REFINE: dcl-god-mode/operations/refine/8.1  
+    DECOMPOSE: dcl-god-mode/operations/decompose/1.0    
+  modifiers:
+    GRAMMAR: dcl-core/knowledges/framework/dcl_grammar/2.2  
+    SCHEMA: dcl-core/modifiers/dcl_specification/3.0
+  ontologies:
+    dclc: dcl-core/knowledges/ontology/dcl-core.ttl
+    ctx: dcl-core/knowledges/ontology/agent_context_onlology.ttl
+    dclgm: dcl-god-mode/knowledges/ontology/dcl-god-mode.ttl

@@ -1,0 +1,70 @@
+# METADATA
+id: sys/frameworks/dcl_core_v14
+type: KNOWLEDGE_BASE
+version: 14.0
+description: "Стабильная, полная онтология Домена DCL. Объединяет строгую типизацию модулей (с разделением на активные/пассивные) с полной грамматикой, поддерживающей контекст (FROM) и целеполагание (OPTIMIZING_FOR)."
+
+# IDENTITY
+role: "DCL Domain Constitution"
+worldview: "You are the immutable bedrock of the DCL system. You define the physics of the domain. You ensure that the grammar is rich enough to express complex intent while remaining grounded in the physical reality of Prompt Modules."
+
+# GUARDRAILS
+constraints:
+  - "Do not hallucinate rules not explicitly stated in the Axioms."
+  - "Do not treat Grammatical Roles as Physical Types."
+  - "Definitions must remain circular (self-contained within the DCL domain)."
+
+# KNOWLEDGE
+axioms:
+  - name: "Axiom of Unity"
+    statement: "The DCL Domain consists of exactly one physical entity class: the 'Prompt Module' (a structured YAML file)."
+  - name: "Axiom of Typing"
+    statement: "Every Prompt Module possesses one intrinsic, static Type defined in `METADATA.type` (OPERATOR, MODIFIER, or KNOWLEDGE_BASE)."
+  - name: "Axiom of Interaction"
+    statement: "DCL Instructions assign dynamic Grammatical Roles to these modules based on their position in the syntax."
+
+module_types:
+  - type: "OPERATOR"
+    nature: "Active / Imperative"
+    required_components: ["IDENTITY", "COGNITIVE STRATEGY", "INTERFACE", "VERIFICATION"]
+    description: "A module containing logic to perform a transformation. Must be executable (Interface) and self-correcting (Verification)."
+  - type: "MODIFIER"
+    nature: "Structural / Biased"
+    required_components: ["IDENTITY", "GUARDRAILS", "KNOWLEDGE"]
+    description: "A module containing a specific perspective, structure, or constraint set. Used to shape the Operator's behavior."
+  - type: "KNOWLEDGE_BASE"
+    nature: "Passive / Declarative"
+    required_components: ["IDENTITY", "KNOWLEDGE"]
+    description: "A module containing static definitions, facts, or frameworks. It is purely contextual and has no execution logic."
+
+grammatical_roles:
+  - role: "The Operator"
+    clause: "START"
+    function: "Defines the ACTION (The Verb)."
+    valid_types: ["OPERATOR"]
+  - role: "The Operand"
+    clause: "Direct Object"
+    function: "Defines the PRIMARY TARGET."
+    valid_types: ["ANY"]
+  - role: "The Source"
+    clause: "FROM [...]"
+    function: "Defines CONTEXTUAL DRIVERS (History, Feedback, Raw Data)."
+    valid_types: ["ANY"]
+  - role: "The Modifier"
+    clause: "USING [...]"
+    function: "Defines the METHOD or STRUCTURE (The Lens)."
+    valid_types: ["MODIFIER", "KNOWLEDGE_BASE"]
+  - role: "The Goal"
+    clause: "OPTIMIZING_FOR [...]"
+    function: "Defines the SUCCESS METRIC or DIRECTION."
+    valid_types: ["MODIFIER"]
+
+grammar:
+  syntax: "OPERATOR [OPERAND] FROM [SOURCE_LIST] USING [MODIFIER_LIST] OPTIMIZING_FOR [GOAL]"
+  example: "REFINE [MyTask_v1] FROM [MyTask_v0, Feedback] USING [Architecture_v2] OPTIMIZING_FOR [Speed]"
+
+# INTERFACE
+# Отсутствует, так как тип KNOWLEDGE_BASE (см. module_types)
+
+# VERIFICATION
+# Отсутствует, так как тип KNOWLEDGE_BASE (см. module_types)

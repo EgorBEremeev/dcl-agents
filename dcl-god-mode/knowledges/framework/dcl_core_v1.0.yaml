@@ -1,0 +1,62 @@
+# METADATA
+id: sys/frameworks/dcl_core_v1
+type: KNOWLEDGE_BASE
+version: 1.0
+description: "Фундаментальное определение Домена DCL, его сущностей и грамматики."
+
+# IDENTITY
+role: "DCL Domain Specification"
+worldview: "System-centric, Recursive, Declarative. You view the world of AI orchestration not as code execution, but as the dynamic assembly of semantic modules."
+
+# COGNITIVE STRATEGY
+instruction: "Define the Domain Context Language (DCL) as a closed, recursive ecosystem."
+thinking_process: "First Principles / Axiomatic Definition"
+heuristics:
+  - "Axiom of Unity: In the DCL Domain, the only physical entity is the 'Prompt Module'."
+  - "Principle of Roles: Entities are defined by the functional role they play in an instruction (Operator, Modifier, Operand), not by their physical nature."
+  - "Principle of Composition: Context is synthesized by layering Modifier Modules onto Operator Modules."
+
+# GUARDRAILS
+constraints:
+  - "NEVER distinguish between 'System' and 'User' modules physically; they differ only in usage."
+  - "Do not introduce runtime concepts (Session, Execution) into the Domain Definition; DCL is Design-Time."
+  - "Strictly adhere to the tripartite entity model: Operator, Modifier, Operand."
+
+# KNOWLEDGE
+concepts:
+  - term: "Prompt Module"
+    definition: "The atomic unit of storage and meaning. A structured file containing instructions, knowledge, or constraints."
+  
+  - term: "DCL Instruction"
+    definition: "A declarative command that combines modules to perform work."
+    grammar: "OPERATOR [OPERAND] USING [MODIFIER]"
+
+entity_roles:
+  - role: "Operator Module (Intention)"
+    function: "Defines WHAT to do (The Active Agent)."
+    examples: ["WRITE", "REFINE", "COMPOSE", "VALIDATE"]
+    
+  - role: "Modifier Module (Perspective/Lens)"
+    function: "Defines HOW to do it (The Structural/Stylistic Filter)."
+    examples: ["Architecture v2.0", "Collector Persona", "Strict JSON Constraint"]
+    
+  - role: "Operand Module (Target)"
+    function: "The subject of the operation (The Passive Object)."
+    examples: ["New Prompt Draft", "Schema v1", "Narrative Text"]
+
+process_mechanics:
+  - step: "Load Operator Module (Base Instruction)"
+  - step: "Load Modifier Module (Contextual Overlay)"
+  - step: "Synthesize Context (Operator + Modifier)"
+  - step: "Apply to Operand (Generation/Modification)"
+
+# INTERFACE
+slots:
+  - dcl_instruction_parse_tree
+output_contract: "Provide definitions and structural relationships based on the DCL Axioms."
+
+# VERIFICATION
+checklist:
+  - "Is the recursive nature of Prompt Modules explicitly stated?"
+  - "Are all three roles (Operator, Modifier, Operand) defined?"
+  - "Is the distinction between Design-Time (DCL) and Runtime (Orchestrator) preserved?"

@@ -1,0 +1,81 @@
+@prefix : <http://dcl.org/agent-context#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://dcl.org/agent-context> rdf:type owl:Ontology ;
+    rdfs:comment "Онтология LLM-контекста как уровней вложенности: от атомарного к глобальному."@ru .
+
+#################################################################
+#    Classes (Сущности с полными определениями)
+#################################################################
+
+### Уровень 4
+:WorkflowContext rdf:type owl:Class ;
+    rdfs:label "Level 4: Workflow Context" ;
+    rdfs:comment "Высокоуровневое состояние долгоживущего бизнес-процесса (BPMN). Включает только ключевые бизнес-данные (itemId, status, approval_flag). Не содержит 'мыслей' агента, но ссылается на сессии выполнения задач."@ru .
+
+### Уровень 3
+:SessionContext rdf:type owl:Class ;
+    rdfs:label "Level 3: Session Context" ;
+    rdfs:comment "Stateful-объект в Agentic Runtime (AR), хранящий состояние одной многошаговой операции. Включает историю всех вызовов (chain), промежуточные артефакты (черновики), метаданные и результаты вызова инструментов."@ru .
+
+### Уровень 2
+:InvocationContext rdf:type owl:Class ;
+    rdfs:label "Level 2: Invocation Context" ;
+    rdfs:comment "Полная совокупность информации для одного-единственного вызова к LLM API. Формируется как System Prompt, динамически собранный из Context Frames."@ru .
+
+### Уровень 1
+:ContextFrame rdf:type owl:Class ;
+    rdfs:label "Level 1: Context Frame" ;
+    rdfs:comment "Семантически завершенный, переиспользуемый модуль инструкции или данных (YAML-файл). Является дизайн-тайм (Design-time) артефактом."@ru .
+
+
+#################################################################
+#    Object Properties (Взаимосвязи)
+#################################################################
+
+# ---------------------------------------------------------------
+# Связь Уровень 4 -> Уровень 3
+# (Workflow ссылается на Сессии в рамках своих задач)
+# ---------------------------------------------------------------
+
+:hasTaskSession rdf:type owl:ObjectProperty ;
+    rdfs:domain :WorkflowContext ;
+    rdfs:range :SessionContext ;
+    owl:inverseOf :executesForWorkflow ;
+    rdfs:comment "Бизнес-процесс может иметь ссылки на множество сессионных контекстов, каждый из которых обслуживает выполнение конкретной задачи (Task) в рамках этого процесса."@ru .
+
+:executesForWorkflow rdf:type owl:ObjectProperty ;
+    rdfs:domain :SessionContext ;
+    rdfs:range :WorkflowContext .
+
+# ---------------------------------------------------------------
+# Связь Уровень 3 -> Уровень 2
+# (Сессия хранит историю вызовов)
+# ---------------------------------------------------------------
+
+:storesInvocationHistory rdf:type owl:ObjectProperty ;
+    rdfs:domain :SessionContext ;
+    rdfs:range :InvocationContext ;
+    owl:inverseOf :belongsToHistoryOf ;
+    rdfs:comment "Сессионный контекст сохраняет в себе последовательность (chain) одиночных вызовов (Invocation Contexts) как часть своего состояния."@ru .
+
+:belongsToHistoryOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :InvocationContext ;
+    rdfs:range :SessionContext .
+
+# ---------------------------------------------------------------
+# Связь Уровень 2 -> Уровень 1
+# (Вызов собирается из Фреймов)
+# ---------------------------------------------------------------
+
+:assembledFromFrame rdf:type owl:ObjectProperty ;
+    rdfs:domain :InvocationContext ;
+    rdfs:range :ContextFrame ;
+    owl:inverseOf :usedInInvocation ;
+    rdfs:comment "Контекст вызова (System Prompt) динамически собирается (компонуется) из набора атомарных Context Frames."@ru .
+
+:usedInInvocation rdf:type owl:ObjectProperty ;
+    rdfs:domain :ContextFrame ;
+    rdfs:range :InvocationContext .

@@ -1,0 +1,44 @@
+# METADATA
+id: dcl-core/knowledges/framework/dcl_grammar
+type: KNOWLEDGE_BASE
+version: 2.2
+description: "Формальная грамматика языка DCL. Описывает правила синтеза DCL-инструкций, управляющих сборкой Invocation Context."
+
+# IDENTITY
+role: "DCL Syntax Authority"
+worldview: "Синтаксис — это интерфейс между Интенцией и Оркестратором. Строгая грамматика гарантирует однозначность интерпретации команд."
+
+# GUARDRAILS
+constraints:
+  - "Все правила должны быть описаны в EBNF."
+  - "Грамматика должна покрывать все ключевые слова ядра (OPERATOR, FROM, USING...)."
+
+# KNOWLEDGE
+lexicon:
+  - KEYWORDS: ["FROM", "USING", "OPTIMIZING_FOR"]
+  - BRACKETS: ["(", ")", "[", "]"]
+  - DELIMITERS: [","]
+
+syntax_rules:
+  - rule: "Instruction ::= ActionClause [SourceClause] [ModifierClause] [GoalClause]"
+  - rule: "ActionClause ::= OperatorID Operand" 
+  - rule: "Operand ::= EntityExpression | StringLiteral | Identifier"
+  - rule: "EntityExpression ::= EntityTypeIdentifier '(' ArgumentContent ')'" 
+  - rule: "SourceClause ::= 'FROM' ResourceList"
+  - rule: "ModifierClause ::= 'USING' ResourceList"
+  - rule: "GoalClause ::= 'OPTIMIZING_FOR' ResourceList"
+  - rule: "ResourceList ::= ResourceExpression { ',' ResourceExpression }"
+  - rule: "ResourceExpression ::= [ResourceType] '(' ResourceID ')' | ResourceID"
+
+semantics:
+  - construction: "ResourceExpression"
+    effect: "Resolves resource by Type and ID. If Type is omitted, infers default."
+
+# INTERFACE
+slots: []
+output_contract: "Полная EBNF спецификация синтаксиса DCL."
+
+# VERIFICATION
+checklist:
+  - "Описаны ли основные клаузы инструкции?"
+  - "Соответствует ли синтаксис примерам использования?"

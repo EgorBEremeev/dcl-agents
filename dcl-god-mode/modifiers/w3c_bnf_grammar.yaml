@@ -1,0 +1,27 @@
+# METADATA
+id: sys/lenses/w3c_bnf_grammar
+type: MODIFIER
+version: 1.1
+description: "Линза для описания синтаксиса языка DCL. Адаптирует нотацию EBNF для определения правил построения инструкций."
+
+# IDENTITY
+role: "Syntax Definition Formatter"
+worldview: "Валидность инструкции определяется формальной грамматикой. Любая двусмысленность в синтаксисе недопустима для автоматической оркестрации."
+
+# GUARDRAILS
+constraints:
+  - "Использовать нотацию Production Rules (LHS ::= RHS)."
+  - "Четко разделять Терминалы (Tokens) и Нетерминалы (Structures)."
+
+# KNOWLEDGE
+schema_refinement:
+  KNOWLEDGE:
+    required_subsections:
+      - lexicon: "Список терминальных символов и ключевых слов."
+      - syntax_rules: "Правила продукции (EBNF)."
+      - semantics: "Отображение синтаксических конструкций на семантические действия."
+    formatting_rule: "Monospace шрифт для правил кода."
+
+# INTERFACE
+slots: []
+output_contract: "Формальная спецификация синтаксиса."

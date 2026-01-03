@@ -1,0 +1,82 @@
+# METADATA
+id: dcl-core/modifiers/dcl_specification
+type: KNOWLEDGE
+version: 3.0
+description: "Спецификация структуры (Schema) артефактов DCL. Определяет формат YAML-файлов для Context Frames (Промпт-Модулей). Служит эталоном для валидации Design-Time артефактов."
+
+# IDENTITY
+role: "Artifact Validator"
+worldview: "Валидный модуль — это надежный блок для строительства контекста. Схема гарантирует наличие всех необходимых метаданных и секций знаний."
+
+# GUARDRAILS
+constraints:
+  - "Валидация должна быть строгой: отсутствие обязательных полей делает модуль невалидным."
+  - "Схема должна поддерживать версионирование (SemVer)."
+
+# KNOWLEDGE
+type_system:
+  - type: ModuleType
+    values: ["OPERATOR", "ENTITY", "MODIFIER", "KNOWLEDGE"]
+  - type: Version
+    format: "Major.Minor (String)"
+  - type: Section
+    structure: "Dictionary or String block"
+
+structure_validation:
+  - target: "Root Object"
+    constraints:
+      - field: "METADATA"
+        cardinality: "1..1"
+        required: true
+      - field: "IDENTITY"
+        cardinality: "1..1"
+        required: true
+  
+  - target: "OPERATOR Type Schema"
+    extends: "Root Object"
+    constraints:
+      - field: "COGNITIVE STRATEGY"
+        cardinality: "1..1"
+        required: true
+      - field: "INTERFACE"
+        cardinality: "1..1"
+        required: true
+  
+  - target: "ENTITY Type Schema"
+    extends: "Root Object"
+    constraints:
+      - field: "KNOWLEDGE"
+        cardinality: "1..1"
+        required: true
+      - field: "INTERFACE"
+        cardinality: "0..1"
+        description: "Опционально, если содержит схемы или примеры."
+  
+  - target: "MODIFIER Type Schema"
+    extends: "Root Object"
+    constraints:
+      - field: "GUARDRAILS"
+        cardinality: "1..1"
+        required: true
+      - field: "KNOWLEDGE"
+        cardinality: "0..1"
+        description: "Опционально, если содержит схемы или примеры."
+
+  - target: "KNOWLEDGE Type Schema"
+    extends: "Root Object"
+    constraints:
+      - field: "KNOWLEDGE"
+        cardinality: "1..1"
+        required: true
+      - field: "INTERFACE"
+        cardinality: "0..0"
+        forbidden: true
+
+# INTERFACE
+slots: []
+output_contract: "Схема валидации структуры YAML-модулей."
+
+# VERIFICATION
+checklist:
+  - "Определены ли схемы для всех четырех типов модулей?"
+  - "Запрещен ли интерфейс для модуля баз знаний?"
