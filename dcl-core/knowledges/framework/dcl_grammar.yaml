@@ -1,6 +1,6 @@
 # METADATA
 id: dcl-core/knowledges/framework/dcl_grammar
-type: KNOWLEDGE_BASE
+type: KNOWLEDGE
 version: 2.2
 description: "Формальная грамматика языка DCL. Описывает правила синтеза DCL-инструкций, управляющих сборкой Invocation Context."
 

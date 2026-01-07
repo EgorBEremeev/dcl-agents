@@ -1,6 +1,6 @@
 # METADATA
 id: knowledges/framework/dcl_god_mode
-type: KNOWLEDGE_BASE
+type: KNOWLEDGE
 version: 0.2
 description: "Базовый промпт-модуль для DCL God Mode Agent'а, сформулированный на основе OWL-онтологии для мета-домена DCL."
 
