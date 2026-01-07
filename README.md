@@ -1,6 +1,6 @@
-# DCL Agent Framework
+# DCL Agents Framework
 
-**DCL Agent Framework** — методология и инструменты для создания специализированных LLM-агентов, предназначенных для конструирования контекста LLM-вызова для задач заданной предметной области — **DCL-агентов**.
+**DCL Agents Framework** — методология и инструменты для конструирования контекста LLM-вызова в заданной предметной области.
 
 ## Модель контекста
 
@@ -47,7 +47,7 @@ DCL Agent является **stateless** компонентом — он не х
 
 # Как это работает
 
-DCL Agent Framework включает три составляющие:
+DCL Agents Framework включает три составляющие:
 
 1. **Формализацию концепции DCL** в форме [OWL-онтологии](dcl-core/knowledges/ontology/dcl-core.ttl), определяющей базовые понятия: Language Entity (операнд), Language Operation (глагол), Language Modifier (линза/ограничение), Instruction (команда).
 
@@ -76,7 +76,7 @@ DCL Agent Framework включает три составляющие:
 WRITE PromptModule('analytics-bundle/operations/summarize.yaml') USING GRAMMAR, SCHEMA
 ```
 
-## Создание других агентов
+## Создание агентов
 
 Оркестратор позволяет создавать разных агентов путём загрузки разных наборов **бандлов** — папок с промпт-модулями:
 
@@ -101,24 +101,24 @@ agent_analyst = DCLAgent(bundles=["./dcl-core", "./analytics-bundle"], adapter=a
 
 ---
 
-## Установка
+# Установка
 
-### Локальная разработка
+## Локальная разработка
 
 ```bash
 pip install -e ./src/dcl_agent
 ```
 
-### Google Colab / Jupyter
+## Google Colab / Jupyter
 
 ```python
-!git clone https://github.com/EgorBEremeev/dcl.git
+!git clone https://github.com/EgorBEremeev/dcl-agents.git
 !pip install -e dcl/src/dcl_agent
 ```
 
 ---
 
-## Быстрый старт: мета-агент
+# Быстрый старт: мета-агент
 
 ```python
 from dcl_agent.agent import DCLAgent
@@ -145,7 +145,7 @@ print(response)
 
 ---
 
-## Создание своего агента
+# Создание своего агента
 
 1. Создайте папку-бандл с нужными промпт-модулями (или сгенерируйте их мета-агентом)
 2. Загрузите бандл вместе с `dcl-core`
