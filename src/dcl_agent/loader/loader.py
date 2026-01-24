@@ -120,8 +120,8 @@ class Loader:
                         version = data.get("version", version)
                         module_id = f"{_id}/{version}"
                         metadata = data
-                except Exception:
-                    # Not valid YAML, treat as raw text
+                except Exception as e:
+                    print (f"{file_path} is not valid YAML, treat as raw text.\n Check the Exception below if file is supposed to be a Prompt-Module: {e}")
                     pass
             
             # 2. Fallback ID Generation (Path-Based)
