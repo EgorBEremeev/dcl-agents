@@ -1,0 +1,85 @@
+# Образец оформления скомпилированной спецификации
+
+Ниже приведен эталонный пример оформления compiled spec с секцией `system_instruction`,
+собранной из Frames оператора:
+
+```yaml
+schema_version: llm-invocation-spec.v1
+service_id: inventory-srv
+workflow_id: inventory_management
+operation_id: extract_item_data
+dcl_bundle: adpilot-core
+dcl_instruction: |
+  EXTRACT Entity('Attribute_Data')
+  FROM Entity('Raw_Description')
+invocation:
+  model_id: gemini-2.5-flash-lite
+  thinking_budget: 0
+  system_instruction: |
+    # Frame 1:
+    ```md
+    dcl_instruction: |
+      EXTRACT Entity('Attribute_Data')
+      FROM Entity('Raw_Description')
+    ```
+
+    # Frame 2:
+    ```yaml
+    # METADATA
+    id: ad-pilot/operations/extract
+    type: OPERATOR
+    version: 1.3
+    description: "Оператор извлечения фактов (Data Mining)..."
+
+    # IDENTITY
+    role: "Forensic Data Auditor"
+    worldview: "Ты — механизм детерминированной проекции неструктурированного текста на жёсткую схемную решётку..."
+
+    # COGNITIVE STRATEGY
+    instruction: "Получи исходный текст (Raw_Description) и схему (Attribute_Schema)..."
+    thinking_process: "Recursive Schema Instantiation"
+    steps: |
+      1. "Structure Mapping: Считай полную иерархию схемы до начала поиска..."
+      2. "Deep Search: Для каждого конечного поля найди значение..."
+      3. "Type Enforcement: Приведи найденное значение к строгому типу..."
+      4. "Null Policy: Если факта нет в тексте — присвой null или []..."
+      5. "Pre-output Verification: До финализации ответа проверь по чеклисту..."
+
+    heuristics:
+      - "Hierarchy Preservation: Вложенность неприкосновенна..."
+      - "Variable vs Inherent: Inherent-характеристики можно вывести из сущности товара..."
+
+    # GUARDRAILS
+    constraints:
+      - "Выходной JSON должен быть валидным экземпляром переданной Attribute_Schema."
+      - "Строго соблюдать вложенность объектов."
+
+    # INTERFACE
+    slots:
+      - name: "Raw_Description"
+        type: "string"
+        description: "Исходный текст объявления."
+      - name: "Attribute_Schema"
+        type: "json_schema"
+        description: "Схема атрибутов (gemini_openapi_dict.v1)."
+
+    output_contract: |
+      JSON Object — валидный экземпляр входной Attribute_Schema.
+
+    # VERIFICATION
+    checklist:
+      - "Соответствует ли структура ответа структуре схемы?"
+      - "Все ли конечные поля присутствуют в ответе?"
+    ```
+
+    # Frame 3:
+    ```
+    Entity('Attribute_Data')
+    ```
+
+  input_placeholders:
+    - source_text
+  output:
+    mode: dynamic_structured
+    schema_format: gemini_openapi_dict.v1
+```
