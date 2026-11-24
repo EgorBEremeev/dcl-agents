@@ -103,7 +103,18 @@ agent_analyst = DCLAgent(bundles=["./dcl-core", "./analytics-bundle"], adapter=a
 
 # Установка
 
-## Локальная разработка
+## Глобальный CLI (рекомендуется для разработки)
+
+Установить `dcl-agent` как глобальный uv tool в editable-режиме:
+
+```bash
+uv tool install --editable ./src/dcl_agent
+```
+
+После установки `dcl-agent` доступен глобально. В editable-режиме изменения
+в `src/dcl_agent/` применяются без переустановки.
+
+## Локальная разработка (библиотека в venv)
 
 ```bash
 pip install -e ./src/dcl_agent
@@ -118,6 +129,23 @@ pip install -e ./src/dcl_agent
 
 ---
 
+# CLI: компиляция DCL-инструкций
+
+После установки через `uv tool` доступна команда `dcl-agent`:
+
+```bash
+# Состояние реестра: алиасы и загруженные модули
+dcl-agent registry --bundles ./dcl-core,../dcl-adpilot/adpilot-core
+
+# Компиляция инструкции в InvocationContext (frames | concat)
+dcl-agent compile --bundles ./dcl-core,../dcl-adpilot/adpilot-core \
+  --instruction "EXTRACT Entity('Attribute_Data') FROM Entity('Raw_Description')" \
+  --output concat
+```
+
+Компиляция выполняется стратегией `GeminiNativeStrategy` ([src/dcl_agent/strategies/gemini.py](src/dcl_agent/strategies/gemini.py)) — стратегией `DCLAgent` по умолчанию; выбора другой стратегии в CLI нет. Режим `concat` выдаёт готовый текст для `system_instruction` в compiled spec. Подробнее: [REQ-005](.workspace/SP-005_dcl_agent_cli/REQ-005_dcl_agent_cli.md), [TSD-005](.workspace/SP-005_dcl_agent_cli/TSD-005_dcl_agent_cli.md).
+
+---
 # Быстрый старт: мета-агент
 
 ```python

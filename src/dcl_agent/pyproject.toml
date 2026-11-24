@@ -17,5 +17,8 @@ dependencies = [
 [tool.setuptools]
 packages = ["dcl_agent"]
 
+[project.scripts]
+dcl-agent = "dcl_agent.cli:main"
+
 [tool.setuptools.package-dir]
 dcl_agent = "."

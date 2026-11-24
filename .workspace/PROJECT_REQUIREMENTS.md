@@ -1,6 +1,6 @@
 # Project Requirements Index
 
-**Last Updated:** 2025-12-18
+**Last Updated:** 2026-11-24
 
 ---
 
@@ -18,6 +18,7 @@
 | REQ-002 | Aliases in DCL instructions | Registry, Loader | v1.0 | `.workspace/SP-002_Aliases_in_DCL_instructions/REQ-002_Aliases_in_DCL_instructions.md` | 2025-12-16 |
 | REQ-003 | Resources Formatting | Base Strategy, Gemini Strategy, Concat Strategy | v1.0 | `.workspace/SP-003_invocation_context_strategies_refinement/REQ-003_Resources_Formatting.md` | 2025-12-19 |
 | REQ-004 | Notebook Support | Packaging, Notebooks | v1.0 | `.workspace/SP-004_notebook_support/REQ-004_notebook_support.md` | 2025-12-26 |
+| REQ-005 | DCL Agent CLI | CLI (`cli.py`), Packaging (`pyproject.toml`) | v1.0 | `.workspace/SP-005_dcl_agent_cli/REQ-005_dcl_agent_cli.md` | 2026-11-24 |
 
 **Примечания:**
 - **ID**: Уникальный идентификатор темы требований (инкрементальный).
@@ -37,6 +38,7 @@
 | TSD-002 | Alias Resolution Design | Registry, Loader | v1.0 | `.workspace/SP-002_Aliases_in_DCL_instructions/TSD-002_Aliases_in_DCL_instructions.md` | 2025-12-16 |
 | TSD-003 | Resources Formatting | Base Strategy, Gemini Strategy, Concat Strategy | v1.0 | `.workspace/SP-003_invocation_context_strategies_refinement/TSD-003_Resources_Formatting.md` | 2025-12-19 |
 | TSD-004 | Packaging and Notebook Support | Packaging, Notebooks | v1.0 | `.workspace/SP-004_notebook_support/TSD-004_packaging.md` | 2025-12-26 |
+| TSD-005 | DCL Agent CLI Design | CLI (`cli.py`), Packaging (`pyproject.toml`) | v1.0 | `.workspace/SP-005_dcl_agent_cli/TSD-005_dcl_agent_cli.md` | 2026-11-24 |
 
 ---
 
@@ -44,6 +46,7 @@
 
 [Журнал изменений индекса, документирующий, какие спринты добавили или обновили артефакты.]
 
+- **2026-11-24 (SP-005):** Созданы REQ-005 v1.0, TSD-005 v1.0 (DCL Agent CLI — `dcl-agent compile` / `registry`; установка как `uv tool --editable`)
 - **2025-12-26 (SP-004):** Созданы REQ-004 v1.0, TSD-004 v1.0, IMP-004 v1.0 (Notebook Support)
 - **2025-12-19 (SP-003):** Созданы REQ-003 v1.0, TSD-003 v1.0 (Resources Formatting)
 - **2025-12-18 (Организационная задача):** Создан индекс требований на основе существующих артефактов SP-001 и SP-002

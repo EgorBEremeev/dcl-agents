@@ -1,8 +1,8 @@
 # Project Architecture: DCL Agent
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Created:** 2025-12-06  
-**Last Updated:** 2025-12-18
+**Last Updated:** 2026-11-24
 
 ---
 
@@ -46,6 +46,7 @@
 | **Parser** | Парсит DCL-инструкции в промежуточное представление (`Instruction`). Использует Lark для разбора грамматики. |
 | **Strategy Module** | Реализует сборку `InvocationContext` через паттерн Стратегия (Concatenation, GeminiNative и др.). |
 | **Adapter Module** | Инкапсулирует работу с LLM API (Gemini, Mock). Преобразует `InvocationContext` в формат конкретного провайдера. |
+| **CLI Module** | Точка входа `dcl-agent` (console script). Команды `compile` и `registry` для компиляции InvocationContext и инспекции реестра. |
 
 ---
 
@@ -171,6 +172,35 @@ class InvocationContext:
 
 ---
 
+### CLI Module (`cli.py`)
+
+**Роль:** Компиляция DCL-инструкций в InvocationContext из командной строки.
+
+**Ответственность:**
+- Предоставить исполняемый файл `dcl-agent` через `[project.scripts]` в `pyproject.toml`
+- Команда `compile`: парсит инструкцию, собирает контекст стратегией компиляции `GeminiNativeStrategy` (`dcl_agent.strategies.gemini`, стратегия `DCLAgent` по умолчанию; флага выбора стратегии нет) с `MockLLMAdapter`, выводит Frames
+- Команда `registry`: выводит алиасы и список модулей реестра
+- Обеспечить воспроизводимую компиляцию `system_instruction` для authored compiled specs
+
+**Режимы вывода compile:**
+- `--output frames` — каждый Frame с заголовком (отладка, понимание структуры)
+- `--output concat` — конкатенация Frame-ов (`\n\n`), готов для вставки в `system_instruction`
+
+**Установка:**
+```bash
+uv tool install --editable "src/dcl_agent"
+```
+
+**Пример использования:**
+```powershell
+dcl-agent compile `
+  --bundles "dcl-core,adpilot-core" `
+  --instruction "EXTRACT Entity('Attribute_Data') FROM Entity('Raw_Description')" `
+  --output concat
+```
+
+---
+
 ### Adapter Module
 
 **Роль:** Абстрагирование от специфики LLM API.
@@ -203,6 +233,7 @@ class ILLMAdapter(ABC):
 - **Testing:** `pytest`
 - **Data Validation:** Dataclasses (встроенная библиотека Python)
 - **Configuration:** PyYAML
+- **CLI:** `argparse` (стандартная библиотека); установка через `uv tool`
 
 ---
 
@@ -256,4 +287,5 @@ class ILLMAdapter(ABC):
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1 | 2026-11-24 | Добавлен CLI Module (`cli.py`); обновлена таблица компонентов; обновлен технологический стек (SP-005) |
 | 1.0 | 2025-12-06 | Создание архитектуры на основе артефактов SP-001 и SP-002 |
