@@ -46,15 +46,16 @@ description: >-
    - Frame 2: prompt-модуль оператора (блок `yaml`);
    - Frame 3+: операнд / сущности.
    Дамп `index.yaml` и `zero_context_frame` в compiled spec не включаются (они использовались только для симуляции в AI Studio).
-6. **Заполнить заголовок и параметры инвокации** по [compiled_spec_format.md](./references/compiled_spec_format.md):
+6. **Заполнить заголовки и параметры инвокации** по [compiled_spec_format.md](./references/compiled_spec_format.md):
+   - `schema_version: llm-invocation-spec.v2`;
    - `dcl_instruction` — ровно тот же DCL-текст, что компилировался в шаге 3;
-   - `invocation.model_id` и `invocation.thinking_budget`;
-   - `output`: для структурированных ответов зафиксировать `schema_format: gemini_openapi_dict.v1`.
+   - `invocation`: `model_id`, `thinking_level`, `store: false` и при необходимости `fallback_models`;
+   - `output`: для структурированных ответов зафиксировать `schema_format: json_schema.v1`.
 7. **Верифицировать результат:**
    - YAML парсится без ошибок;
    - `operation_id` строго совпадает с записью в `manifest.yaml` сервиса;
    - `input_placeholders` совпадают с именами параметров в коде вызова `_invoke(spec, **inputs)`;
-   - Для structured-режима проверено соответствие профилю схемы без запрещенных мета-ключей.
+   - для structured-режима проверено соответствие профилю `json_schema.v1` без запрещенных мета-ключей на узле схемы (`x-*` допустимы только внутри `properties`).
 
 ## Типичные ошибки
 - Конструкции шагов с двоеточиями ломают YAML-парсер — используй блок `steps: |`.

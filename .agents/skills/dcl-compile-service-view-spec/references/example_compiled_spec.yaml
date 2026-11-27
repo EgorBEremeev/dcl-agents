@@ -1,26 +1,32 @@
 # Образец оформления скомпилированной спецификации
 
-Ниже приведен эталонный пример оформления compiled spec с секцией `system_instruction`,
+Ниже приведен эталонный пример оформления compiled spec (`llm-invocation-spec.v2`) с секцией `system_instruction`,
 собранной из Frames оператора:
 
 ```yaml
-schema_version: llm-invocation-spec.v1
+schema_version: llm-invocation-spec.v2
 service_id: inventory-srv
 workflow_id: inventory_management
 operation_id: extract_item_data
 dcl_bundle: adpilot-core
 dcl_instruction: |
-  EXTRACT Entity('Attribute_Data')
-  FROM Entity('Raw_Description')
+  EXTRACT Entity('Attribute_Schema')
+  FROM Entity('Draft_Record')
 invocation:
-  model_id: gemini-2.5-flash-lite
-  thinking_budget: 0
+  model_id: gemini-3.5-flash-lite
+  thinking_level: minimal
+  store: false
+  fallback_models:
+    - model_id: gemini-3.6-flash
+      thinking_level: minimal
+    - model_id: gemini-4-hydrogen
+      thinking_level: low
   system_instruction: |
     # Frame 1:
     ```md
     dcl_instruction: |
-      EXTRACT Entity('Attribute_Data')
-      FROM Entity('Raw_Description')
+      EXTRACT Entity('Attribute_Schema')
+      FROM Entity('Draft_Record')
     ```
 
     # Frame 2:
@@ -36,7 +42,7 @@ invocation:
     worldview: "Ты — механизм детерминированной проекции неструктурированного текста на жёсткую схемную решётку..."
 
     # COGNITIVE STRATEGY
-    instruction: "Получи исходный текст (Raw_Description) и схему (Attribute_Schema)..."
+    instruction: "Получи исходный текст (Draft_Record) и схему (Attribute_Schema)..."
     thinking_process: "Recursive Schema Instantiation"
     steps: |
       1. "Structure Mapping: Считай полную иерархию схемы до начала поиска..."
@@ -56,12 +62,12 @@ invocation:
 
     # INTERFACE
     slots:
-      - name: "Raw_Description"
+      - name: "Draft_Record"
         type: "string"
         description: "Исходный текст объявления."
       - name: "Attribute_Schema"
         type: "json_schema"
-        description: "Схема атрибутов (gemini_openapi_dict.v1)."
+        description: "Схема атрибутов в профиле json_schema.v1."
 
     output_contract: |
       JSON Object — валидный экземпляр входной Attribute_Schema.
@@ -74,12 +80,12 @@ invocation:
 
     # Frame 3:
     ```
-    Entity('Attribute_Data')
+    Entity('Attribute_Schema')
     ```
 
   input_placeholders:
     - source_text
   output:
     mode: dynamic_structured
-    schema_format: gemini_openapi_dict.v1
+    schema_format: json_schema.v1
 ```
